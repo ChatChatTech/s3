@@ -24,7 +24,7 @@ def main():
         dataset = load_from_disk(local_dataset_path)
     except:
         print("Local dataset not found, downloading from HuggingFace...")
-        dataset = load_dataset("EdinburghNLP/xsum", split=['train', 'test', 'validation'])
+        dataset = load_dataset("EdinburghNLP/xsum")
         os.makedirs("./datasets", exist_ok=True)
         dataset.save_to_disk(local_dataset_path)
         print(f"Dataset saved to {local_dataset_path}")

@@ -15,8 +15,8 @@ def summarize(s, article):
     s += user(article)
     s += assistant(gen("summarization", max_tokens=256))
 
-hf_url = "https://huggingface.co/datasets/openai/gsm8k"
-os.environ["S3_DATASET_NAME"] = "gsm8k"
+hf_url = "https://huggingface.co/datasets/ehovy/race"
+os.environ["S3_DATASET_NAME"] = "race"
 
 def main():
     local_dataset_path = "./datasets/"+ os.getenv("S3_DATASET_NAME", "other")
@@ -24,12 +24,12 @@ def main():
         dataset = load_from_disk(local_dataset_path)
     except:
         print("Local dataset not found, downloading from HuggingFace...")
-        splits = ['main', 'socratic']
+        splits = ['all']
         os.makedirs("./datasets", exist_ok=True)
         for i, split_name in enumerate(splits):
             split_path = os.path.join(local_dataset_path, split_name)
             os.makedirs(split_path, exist_ok=True)
-            dataset = load_dataset("openai/gsm8k", split_name, trust_remote_code=True)
+            dataset = load_dataset("ehovy/race", split_name, trust_remote_code=True)
             dataset.save_to_disk(split_path)
         print(f"Dataset saved to {local_dataset_path}")
         
